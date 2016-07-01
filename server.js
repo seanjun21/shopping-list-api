@@ -62,7 +62,7 @@ app.delete( '/items/:id', function( req, res ) {
       return res.status( 200 ).json( deleted );
     }
   }
-  return res.sendStatus( 400 );
+  return res.sendStatus( 404 );
 } );
 
 app.put( '/items/:id', jsonParser, function( req, res ) {

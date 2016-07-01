@@ -114,4 +114,13 @@ describe( 'Shopping List', function() {
         done();
       } );
   } );
+  it( 'should fail gracefully on DELETE requests with bad id', function( done ) {
+    chai.request( app )
+      .delete( '/items/10' )
+      .end( function( err, res ) {
+        should.not.equal( err, null );
+        res.should.have.status( 404 );
+        done();
+      } );
+  } );
 } );
