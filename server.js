@@ -19,7 +19,7 @@ Storage.prototype.add = function( name ) {
 
 Storage.prototype.delete = function( index ) {
   var deleted = this.items.splice( index, 1 );
-  return deleted;
+  return deleted[ 0 ];
 };
 
 Storage.prototype.put = function( index, reqName ) {
@@ -70,15 +70,17 @@ app.put( '/items/:id', jsonParser, function( req, res ) {
   if ( !req.body ) {
     return res.sendStatus( 400 );
   }
+  if ( !req.body.name ) {
+    return res.sendStatus( 422 );
+  }
   for ( var i = 0; i < storage.items.length; i++ ) {
     if ( storage.items[ i ].id === id ) {
       var edited = storage.put( i, req.body.name );
-      console.log(edited, '<-- this is the response.body');
       return res.status( 200 ).json( edited );
     }
   }
 
-  return res.sendStatus( 404);
+  return res.sendStatus( 404 );
 } );
 
 app.listen( process.env.PORT || 8080 );
